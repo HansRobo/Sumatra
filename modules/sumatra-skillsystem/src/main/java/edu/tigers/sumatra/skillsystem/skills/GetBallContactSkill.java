@@ -45,11 +45,15 @@ public class GetBallContactSkill extends AMoveToSkill
 
 	private double getTargetOrientation()
 	{
+		// ボールの方向
 		var dir = getBall().getPos().subtractNew(getPos());
 		boolean ballNotOnCamera = !getBall().isOnCam(0.1);
 		boolean insideBot = dir.getLength2() < getTBot().getCenter2DribblerDist();
 		if (ballNotOnCamera || insideBot)
 		{
+			// ボールが見えない（ロボットに隠れている？）
+			// ボールが十分に近い
+			// => 前回の方向を使う
 			return cachedOrientation;
 		}
 		double currentDir = dir.getAngle(0);
@@ -66,11 +70,14 @@ public class GetBallContactSkill extends AMoveToSkill
 	{
 		super.doEntryActions();
 		positionValidator.setMarginToFieldBorder(Geometry.getBoundaryWidth() - Geometry.getBotRadius());
+		// 初期方向：ボールの方向
 		cachedOrientation = getBall().getPos().subtractNew(getPos()).getAngle();
 		approachBallExtraDist = 0;
 		initBallPos = getBall().getPos();
+		// キッカーはOFF、ドリブラーはON
 		setKickParams(KickParams.disarm().withDribblerMode(EDribblerMode.DEFAULT));
 
+		// ボールを避けないようにする
 		getMoveCon().physicalObstaclesOnly();
 		getMoveCon().setBallObstacle(false);
 	}
