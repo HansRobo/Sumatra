@@ -86,10 +86,14 @@ public class GetBallContactSkill extends AMoveToSkill
 	@Override
 	public void doUpdate()
 	{
+	    // 接触時間が一定以上になったら成功
 		if (getTBot().getBallContact().getContactDuration() > minSuccessContactTime)
 		{
 			setSkillState(ESkillState.SUCCESS);
-		} else if (!getTBot().getBallContact().hadContact(0.1)
+		}
+		// 0.1s以上ボールに接触していない　&& (ボールが初期位置から OR ボールが初期位置から10cm以上移動している)
+		// => 失敗
+		else if (!getTBot().getBallContact().hadContact(0.1)
 				&& (approachBallExtraDist > maxApproachBallExtraDist
 				|| initBallPos.distanceTo(getBall().getPos()) > 100))
 		{
@@ -107,6 +111,7 @@ public class GetBallContactSkill extends AMoveToSkill
 
 		positionValidator.update(getWorldFrame(), getMoveCon());
 
+        // 接触時間を満たしていない場合継続
 		if (getTBot().getBallContact().getContactDuration() < minContactTime)
 		{
 			var dest = getDest();
@@ -117,11 +122,14 @@ public class GetBallContactSkill extends AMoveToSkill
 			cachedOrientation = getTargetOrientation();
 			updateTargetAngle(cachedOrientation);
 
+            // 15mmより近い場合，さらに10mm近づく
 			if (getPos().distanceTo(dest) < 15)
 			{
 				approachBallExtraDist += 10;
 			}
-		} else
+		}
+		// 十分に近づいて接触時間を満たしている場合はボールとの適正な距離を維持
+		else
 		{
 			approachBallExtraDist = 0;
 		}
@@ -137,6 +145,8 @@ public class GetBallContactSkill extends AMoveToSkill
 
 	private IVector2 getDest()
 	{
+        // ロボットがcachedOrientationを向いた状態でアプローチできる位置にターゲットを生成
+        // approachBallExtraDistの分だけボールから離れる
 		return getBall().getPos().subtractNew(
 				Vector2.fromAngle(cachedOrientation).scaleTo(
 						getTBot().getCenter2DribblerDist() + Geometry.getBallRadius() - approachBallExtraDist
