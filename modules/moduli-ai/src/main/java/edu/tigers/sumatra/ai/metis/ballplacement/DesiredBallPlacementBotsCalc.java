@@ -19,6 +19,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
 
+/**
+ * このクラスはボール配置のための望ましいロボットを選択するためのものです。
+ * ボール配置位置に基づいて、最適なロボットを選び出し、
+ * 必要なロボットの数を管理します。
+ * また、前回選択されたロボットの状態も保持します。
+ */
 
 /**
  * Select the desired bots for ball placement.

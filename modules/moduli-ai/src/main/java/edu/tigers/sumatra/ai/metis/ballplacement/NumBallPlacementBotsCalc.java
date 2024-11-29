@@ -11,6 +11,14 @@ import edu.tigers.sumatra.math.vector.IVector2;
 import lombok.Getter;
 
 
+/*
+ ボールプレイスメントに使うロボットの台数
+
+ 前フレーム1台 -> ボールの距離が3.5m以上になると2台にする
+ 前フレーム2台 -> ボールの距離が2.5m以下になると1台にする
+ */
+
+
 public class NumBallPlacementBotsCalc extends ACalculator
 {
 	@Configurable(defValue = "true")

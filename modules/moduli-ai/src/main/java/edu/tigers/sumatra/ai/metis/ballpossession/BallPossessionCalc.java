@@ -28,6 +28,14 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 
+/*
+ 近い：4cm
+ 遠い：8cm
+ ボール保持のしきい値：0.1秒
+ ボール喪失のしきい値：1.5秒
+ */
+
+
 /**
  * This calculator determines whether {@link EBallPossession#WE}, {@link EBallPossession#THEY},
  * {@link EBallPossession#BOTH} or {@link EBallPossession#NO_ONE} has the ball.

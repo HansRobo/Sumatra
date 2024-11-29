@@ -33,6 +33,12 @@ import java.util.Optional;
 
 
 /**
+ * WorldFrameからキックイベントを取得し、
+ * それに対応するパスをバッファに記憶していく
+ * 
+ */
+
+/**
  * Track the ongoing pass by matching passes with the ball kick fit state.
  */
 @Log4j2
