@@ -26,6 +26,29 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Supplier;
 
+/**
+
+ボールの速度で状態を計算する（ballSpeedHysteresis）
+- 0.0~0.2 m/s 停止
+- 0.2~0.7 m/s ゆっくり動いている
+- 0.7~ m/s  　素早く動いている
+- 
+
+「停止」：
+「ゆっくり」：
+	「停止」->「ゆっくり」：停止している状態に準じた行動
+	「素早い」->「ゆっくり」：インターセプトを行う
+「素早い」：インターセプトを行う
+
+インターセプトを行う：
+	インターセプトができる：
+	インターセプトができない：
+
+インターセプトの判断基準：
+
+試合停止中：単純距離が最も近いロボットを選択する。
+
+ */
 
 /**
  * find the best offensive robot to interact with the ball
